@@ -1,16 +1,15 @@
 /*global module: false, require: false*/
 
 /*
- * grunt-include-file
+ * grunt-data-include
+ * include files as data into other files
+ *  
+ * heavily based on grunt-include-file
  * https://github.com/Sjeiti/grunt-include-file
- *
- * Copyright (c) 2014 Ron Valstar
- * Licensed under the MIT license.
- * @version: 0.1.1
- */
+ */heavily
 module.exports = function (grunt) {
     'use strict';
-    grunt.registerMultiTask('include_file', 'Include files.', function () {
+    grunt.registerMultiTask('data_include', 'Include data.', function () {
 
         var fs = require('fs'),
             sCwd = this.data.cwd || '',

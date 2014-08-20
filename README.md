@@ -1,27 +1,30 @@
-# grunt-include-file
+# grunt-data-include
 
-> Include files into other files, including base64 encoding.
+> Grunt plugin to include file as data into other files, in diferente formats, such as base64 or hex.
 
 ## Getting Started
-This plugin requires Grunt `~0.4.1`
+This plugin requires Grunt `~0.4.5`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-include-file --save-dev
+npm install grunt-data-include --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-include-file');
+grunt.loadNpmTasks('grunt-data-include');
 ```
 
-In your project's Gruntfile, add a section named `include_file` to the data object passed into `grunt.initConfig()`.
+## The "data_include" task
+
+### Overview
+In your project's Gruntfile, add a section named `data_include` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  include_file: {
+  data_include: {
     options: {
       // Task-specific options go here.
     },
@@ -29,57 +32,54 @@ grunt.initConfig({
       // Target-specific file lists and/or options go here.
     },
   },
-})
-```
-
-## The "include_file" task
-
-### Overview
-
-You can include anything into anything through a block-comment:
-
-```html
-<!-- include content.html -->
-```
-
-```js
-/*include somefile.js*/
-```
-
-```less
-/*! include -b image.png */
+});
 ```
 
 ### Options
 
-You can add parameters to the comment.
+#### options.separator
+Type: `String`
+Default value: `',  '`
 
-#### escape quotes
-Param: `-e`
+A string value that is used to do something with whatever.
 
-#### encodeURIComponent
-Param: `-u`
+#### options.punctuation
+Type: `String`
+Default value: `'.'`
 
-#### base64 encoding
-Param: `-b`
-
-#### maintain use strict
-Param: `-ms`
+A string value that is used to do something else with whatever else.
 
 ### Usage Examples
 
 #### Default Options
+In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
 
 ```js
 grunt.initConfig({
-	include_file: {
-		default_options: {
-			cwd: 'test/fixtures/',
-			src: ['index.html'],
-			dest: 'tmp/'
-		}
-	}
-})
+  data_include: {
+    options: {},
+    files: {
+      'dest/default_options': ['src/testing', 'src/123'],
+    },
+  },
+});
+```
+
+#### Custom Options
+In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+
+```js
+grunt.initConfig({
+  data_include: {
+    options: {
+      separator: ': ',
+      punctuation: ' !!!',
+    },
+    files: {
+      'dest/default_options': ['src/testing', 'src/123'],
+    },
+  },
+});
 ```
 
 ## Contributing
