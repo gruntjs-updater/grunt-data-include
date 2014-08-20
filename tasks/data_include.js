@@ -3,10 +3,11 @@
 /*
  * grunt-data-include
  * include files as data into other files
+ * https://github.com/rafaelrabeloit/grunt-data-include
  *  
  * heavily based on grunt-include-file
  * https://github.com/Sjeiti/grunt-include-file
- */heavily
+ */
 module.exports = function (grunt) {
     'use strict';
     grunt.registerMultiTask('data_include', 'Include data.', function () {

@@ -1,73 +1,74 @@
+/*global module: false, require: false*/
+
 /*
  * grunt-data-include
+ * include files as data into other files
  * https://github.com/rafaelrabeloit/grunt-data-include
  *
- * Copyright (c) 2014 Rafael
- * Licensed under the MIT license.
+ * heavily based on grunt-include-file
+ * https://github.com/Sjeiti/grunt-include-file
  */
 
-'use strict';
+module.exports = function (grunt) {
+    'use strict';
 
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>'
-      ],
-      options: {
-        jshintrc: '.jshintrc'
-      }
-    },
-
-    // Before generating any new files, remove any previously-created files.
-    clean: {
-      tests: ['tmp']
-    },
-
-    // Configuration to be run (and then tested).
-    data_include: {
-      default_options: {
-        options: {
+    // Project configuration.
+    grunt.initConfig({
+        jshint: {
+            all: [
+                'Gruntfile.js', 'tasks/*.js', '<%= nodeunit.tests %>'
+            ],
+            options: {
+                jshintrc: '.jshintrc'
+            }
         },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!'
+
+        // Before generating any new files, remove any previously-created files.
+        clean: {
+            tests: ['tmp']
         },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
+
+        // Configuration to be run (and then tested).
+        data_include: {
+            default_options: {
+                cwd: 'test/fixtures/',
+                src: ['index.html'],
+                dest: 'tmp/'
+            }
+        },
+
+        // Unit tests.
+        nodeunit: {
+            tests: ['test/*_test.js']
+        },
+
+        version_git: {
+            main: {
+                files: {
+                    src: [
+                        'tasks/data_include.js',
+                        'package.json'
+                    ]
+                }
+            }
         }
-      }
-    },
 
-    // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js']
-    }
+    });
 
-  });
+    // Actually load this plugin's task(s).
+    grunt.loadTasks('tasks');
 
-  // Actually load this plugin's task(s).
-  grunt.loadTasks('tasks');
+    // These plugins provide necessary tasks.
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    grunt.loadNpmTasks('grunt-version-git');
 
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    // Whenever the "test" task is run, first clean the "tmp" dir, then run this
+    // plugin's task(s), then test the result.
+    grunt.registerTask('test', ['clean', 'data_include', 'nodeunit']);
 
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'data_include', 'nodeunit']);
-
-  // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+    // By default, lint and run all tests.
+    grunt.registerTask('default', ['jshint', 'test']);
 
 };
