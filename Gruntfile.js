@@ -1,4 +1,4 @@
-/*global module: false, require: false*/
+/*global module: false*/
 
 /*
  * grunt-data-include
@@ -33,6 +33,11 @@ module.exports = function (grunt) {
             default_options: {
                 cwd: 'test/fixtures/',
                 src: ['index.html'],
+                dest: 'tmp/'
+            },
+			not_found: {
+                cwd: 'test/fixtures/',
+                src: ['index1.html'],
                 dest: 'tmp/'
             }
         },
@@ -71,4 +76,5 @@ module.exports = function (grunt) {
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint', 'test']);
 
+    grunt.registerTask('not_found', ['clean', 'data_include:not_found']);
 };

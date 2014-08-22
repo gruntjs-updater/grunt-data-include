@@ -68,8 +68,12 @@ module.exports = function (grunt) {
         }
 
         this.data.src.forEach(function (src) {
-            grunt.log.writeln(' ', sCwd + src); // log
-            grunt.file.write(sDest + src, includeInto(sCwd + src));
+			if (fs.existsSync(sCwd + src)){
+				grunt.log.writeln(' ', sCwd + src); // log
+				grunt.file.write(sDest + src, includeInto(sCwd + src));
+			} else {
+				grunt.log.writeln('- NO FOUND! -', sCwd + src); // log
+			}
         });
 
         grunt.log.writeln(iNumFiles + ' files processed.');

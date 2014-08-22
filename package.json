@@ -1,7 +1,7 @@
 {
     "name": "grunt-data-include",
-    "description": "Grunt plugin to include file as data into other files, in diferente formats, such as base64 or hex.",
-    "version": "0.1.0",
+    "description": "Grunt plugin to include file as data into other files, in different formats, such as base64 or hex.",
+    "version": "0.1.2",
     "homepage": "https://github.com/rafaelrabeloit/grunt-data-include",
     "author": {
         "name": "Rafael",
